@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    /*le doy una opacidad a la imagen de fondo */
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('./assets/fondo.jpg.jpg');
+    background-repeat: no-repeat;
+    background-position:center;
+    /*para que ocupe todo el fondo */
+    background-size:cover;
+    /*para que ocupe toda la pantalla viewport height (altura del dispositivo)*/
+    height:100vh;
+
+}
