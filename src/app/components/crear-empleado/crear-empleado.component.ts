@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { EmpleadoService } from 'src/app/services/empleado.service';
 
 @Component({
   selector: 'app-crear-empleado',
@@ -9,8 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CrearEmpleadoComponent implements OnInit {
   crearEmpleado: FormGroup;
   submitted = false;
-
-  constructor(private fb: FormBuilder) {
+//inyectamos el metodo _empleadoService creado en .service
+//utilizamos la clase router para movernos entre los componentes typescripts
+  constructor(private fb: FormBuilder,
+    private _empledoService:EmpleadoService,
+    private router: Router) {
     //formulario
     this.crearEmpleado = this.fb.group({
       nombre: ['', Validators.required],
@@ -23,8 +28,9 @@ export class CrearEmpleadoComponent implements OnInit {
   ngOnInit(): void {}
 
 //metodos
-agregarEmpleado(
-  ){
+
+//metodo para controlar que los campos del formulario no esten vacios.
+agregarEmpleado(){
   this.submitted=true;
   if(this.crearEmpleado.invalid){
     return;
@@ -38,7 +44,15 @@ agregarEmpleado(
     fechaCreacion: new Date(),
     fechaActualizacion: new Date()
   }
-  console.log(empleado);
+
+  //al ejecutar el metodo damos dos acciones en caso de un registro correcto o no
+  this._empledoService.agregarEmpleado(empleado).then(() =>{
+    console.log('empleado registrado con exito!');
+    //funcion que me redirecciona al componente lista-empleados al agregar.
+    this.router.navigate(['/lista-empleados'])
+  }).catch(error=> {
+    console.log(error);
+  })
 
 }
 
