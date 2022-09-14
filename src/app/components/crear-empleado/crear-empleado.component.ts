@@ -29,6 +29,7 @@ agregarEmpleado(
   if(this.crearEmpleado.invalid){
     return;
   }
+//objeto empleado 
   const empleado:any={
     nombre: this.crearEmpleado.value.nombre,
     apellido: this.crearEmpleado.value.apellido,
