@@ -13,6 +13,10 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 export class CrearEmpleadoComponent implements OnInit {
   crearEmpleado: FormGroup;
   submitted = false;
+  loading = false;
+
+
+
   //inyectamos el metodo _empleadoService creado en .service
   //utilizamos la clase router para movernos entre los componentes typescripts
   constructor(
@@ -49,7 +53,9 @@ export class CrearEmpleadoComponent implements OnInit {
       fechaCreacion: new Date(),
       fechaActualizacion: new Date(),
     };
-
+    //cuando aprete agregar empleado se va a mostrar el spinner de carga
+    this.loading= true;
+    
     //al ejecutar el metodo damos dos acciones en caso de un registro correcto o no
     this._empledoService
       .agregarEmpleado(empleado)
@@ -62,9 +68,13 @@ export class CrearEmpleadoComponent implements OnInit {
         
         //funcion que me redirecciona al componente lista-empleados al agregar.
         this.router.navigate(['/lista-empleados']);
+        this.loading=false;
       })
       .catch((error) => {
         console.log(error);
       });
+
+
+      
   }
 }
