@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 body{
     /*le doy una opacidad a la imagen de fondo */
     background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('./assets/fondo.jpg.jpg');
@@ -10,3 +11,8 @@ body{
     height:100vh;
 
 }
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }

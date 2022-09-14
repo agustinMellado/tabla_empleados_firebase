@@ -6,7 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxToastNotifierModule } from 'ngx-toast-notifier';
 
 // componentes
 import { AppComponent } from './app.component';
@@ -15,19 +16,22 @@ import { ListaEmpleadosComponent } from './components/lista-empleados/lista-empl
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     CrearEmpleadoComponent,
     ListaEmpleadosComponent,
-    NavbarComponent
-  ],
+    NavbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    NgxToastNotifierModule.forRoot(), // NgxToastNotifierModule added
+  
   ],
   providers: [],
   bootstrap: [AppComponent]
