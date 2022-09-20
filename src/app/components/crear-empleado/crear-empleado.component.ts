@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxToastService } from 'ngx-toast-notifier';
 
 import { EmpleadoService } from 'src/app/services/empleado.service';
@@ -14,8 +14,7 @@ export class CrearEmpleadoComponent implements OnInit {
   crearEmpleado: FormGroup;
   submitted = false;
   loading = false;
-
-
+  id: string | null; //variable que al momento de 'editar' es string y al momento de 'agregar' null.
 
   //inyectamos el metodo _empleadoService creado en .service
   //utilizamos la clase router para movernos entre los componentes typescripts
@@ -23,7 +22,8 @@ export class CrearEmpleadoComponent implements OnInit {
     private fb: FormBuilder,
     private _empledoService: EmpleadoService,
     private router: Router,
-    private ngxToastService: NgxToastService
+    private ngxToastService: NgxToastService,//notificaciones
+    private aRouter: ActivatedRoute //Permite acceder al 'id' cuando atravez del boton 'editar'
   ) {
     //formulario
     this.crearEmpleado = this.fb.group({
@@ -32,6 +32,7 @@ export class CrearEmpleadoComponent implements OnInit {
       documento: ['', Validators.required],
       salario: ['', Validators.required],
     });
+    this.id= this.aRouter.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {}
@@ -54,8 +55,8 @@ export class CrearEmpleadoComponent implements OnInit {
       fechaActualizacion: new Date(),
     };
     //cuando aprete agregar empleado se va a mostrar el spinner de carga
-    this.loading= true;
-    
+    this.loading = true;
+
     //al ejecutar el metodo damos dos acciones en caso de un registro correcto o no
     this._empledoService
       .agregarEmpleado(empleado)
@@ -65,16 +66,13 @@ export class CrearEmpleadoComponent implements OnInit {
           'Registro exitoso!',
           'Se a registrado con exito'
         );
-        
+
         //funcion que me redirecciona al componente lista-empleados al agregar.
         this.router.navigate(['/lista-empleados']);
-        this.loading=false;
+        this.loading = false;
       })
       .catch((error) => {
         console.log(error);
       });
-
-
-      
   }
 }
