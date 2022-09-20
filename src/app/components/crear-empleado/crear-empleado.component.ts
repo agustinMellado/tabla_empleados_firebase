@@ -32,6 +32,7 @@ export class CrearEmpleadoComponent implements OnInit {
       documento: ['', Validators.required],
       salario: ['', Validators.required],
     });
+    //Capturar la id
     this.id= this.aRouter.snapshot.paramMap.get('id');
   }
 

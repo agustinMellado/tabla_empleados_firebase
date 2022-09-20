@@ -24,4 +24,10 @@ export class EmpleadoService {
     return this.firestore.collection('empleado').doc(id).delete();
   }
 
+  buscarEmpleado(id: string): Observable<any> {
+    return this.firestore.collection('empleado').doc(id).snapshotChanges()
+
+
+  }
+
 }
