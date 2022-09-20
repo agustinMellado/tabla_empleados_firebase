@@ -15,6 +15,7 @@ export class CrearEmpleadoComponent implements OnInit {
   submitted = false;
   loading = false;
   id: string | null; //variable que al momento de 'editar' es string y al momento de 'agregar' null.
+  titulo = 'Agregar empleado';
 
   //inyectamos el metodo _empleadoService creado en .service
   //utilizamos la clase router para movernos entre los componentes typescripts
@@ -22,7 +23,7 @@ export class CrearEmpleadoComponent implements OnInit {
     private fb: FormBuilder,
     private _empledoService: EmpleadoService,
     private router: Router,
-    private ngxToastService: NgxToastService,//notificaciones
+    private ngxToastService: NgxToastService, //notificaciones
     private aRouter: ActivatedRoute //Permite acceder al 'id' cuando atravez del boton 'editar'
   ) {
     //formulario
@@ -33,10 +34,13 @@ export class CrearEmpleadoComponent implements OnInit {
       salario: ['', Validators.required],
     });
     //Capturar la id
-    this.id= this.aRouter.snapshot.paramMap.get('id');
+    this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //cuando se inicializa el componente llamamos al metodo
+    this.editarEmpleado();
+  }
 
   //metodos
 
@@ -75,5 +79,17 @@ export class CrearEmpleadoComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+  editarEmpleado() {
+   
+    //verifico que no sea nulo
+    if (this.id != null) {
+      this.titulo='Editar empleado';
+      //llamo al servicio, le paso la id, me suscribo xq es un obs y
+      //me meto en una function para q me devuelva datos.
+      this._empledoService.buscarEmpleado(this.id).subscribe((data) => {
+        console.log(data);
+      });
+    }
   }
 }
