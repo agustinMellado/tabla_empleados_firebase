@@ -6,7 +6,7 @@
         <!-- boton con redireccion -->
         <button
           type="button"
-          class="btn btn-dark btn-lg"
+          class="btn btn-dark btn-lg "
           routerLink="/crear-empleado"
         >
           Agregar
@@ -26,10 +26,13 @@
             <td>{{empleado.nombre}}</td>
             <td>{{empleado.apellido}}</td>
             <td>{{empleado.dni}}</td>
-            <td>{{empleado.salario}}</td>
+            <!-- currency para mostrar salario con $ -->
+            <td>{{empleado.salario | currency}}</td>
             <div>
               <td><i class="bi bi-pencil-square text-info me-5"></i></td>
-              <td><i class="bi bi-trash3 text-danger"></i></td>
+              <!-- Con evento click llamo al metodo empleado 
+                al cual por parametro le meto el id -->
+              <td><i (click)="eliminarEmpleado(empleado.id)" class="bi bi-trash3 text-danger"></i></td>
             </div>
           </tr>
         </tbody>

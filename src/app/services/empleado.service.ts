@@ -19,5 +19,9 @@ export class EmpleadoService {
     //ref=>ref.orderBy('fechaCreacion','asc') es para indicar q quiero ordenar y de q manera.
     return this.firestore.collection('empleado',ref=>ref.orderBy('fechaCreacion','asc')).snapshotChanges();
   }
+  //metodo para eliminar empleados de la lista-empleados
+  eliminarEmpleado(id: string): Promise<any> {
+    return this.firestore.collection('empleado').doc(id).delete();
+  }
 
 }
