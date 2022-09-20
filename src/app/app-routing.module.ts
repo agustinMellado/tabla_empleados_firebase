@@ -8,6 +8,8 @@ const routes: Routes = [
   {path: '', redirectTo: 'lista-empleados', pathMatch: 'full'},
   {path: 'lista-empleados', component: ListaEmpleadosComponent},
   {path: 'crear-empleado', component:CrearEmpleadoComponent},
+  //reutilizacion de la ruta, con '/:id' indico que le paso un parametro dinamico.
+  {path: 'editar-empleado/:id', component:CrearEmpleadoComponent},
   //comodin de redireccion para evitar rutas inexistentes
   {path:'**', redirectTo: 'lista-empleados', pathMatch: 'full'},
 

@@ -12,6 +12,8 @@
           Agregar
         </button>
       </div>
+      <h5 *ngIf="empleados.length ==0" class="mt-4">No hay datos para mostrar</h5>
+      <!-- Que se muestre la informacion de la tabla si son mayores a cero -->
       <table *ngIf="empleados.length > 0" class="table mt-3 table-striped">
         <thead>
           <tr>
@@ -25,11 +27,12 @@
           <tr *ngFor="let empleado of empleados">
             <td>{{empleado.nombre}}</td>
             <td>{{empleado.apellido}}</td>
-            <td>{{empleado.dni}}</td>
+            <td>{{empleado.documento}}</td>
             <!-- currency para mostrar salario con $ -->
             <td>{{empleado.salario | currency}}</td>
             <div>
-              <td><i class="bi bi-pencil-square text-info me-5"></i></td>
+              <!-- con routerLink lo redirecciono y paso por parametro el id-->
+              <td><i class="bi bi-pencil-square text-info me-5" [routerLink]="['/editar-empleado/', empleado.id]" ></i></td>
               <!-- Con evento click llamo al metodo empleado 
                 al cual por parametro le meto el id -->
               <td><i (click)="eliminarEmpleado(empleado.id)" class="bi bi-trash3 text-danger"></i></td>
