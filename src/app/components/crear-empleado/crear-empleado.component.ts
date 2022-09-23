@@ -81,15 +81,21 @@ export class CrearEmpleadoComponent implements OnInit {
       });
   }
   editarEmpleado() {
-   
     //verifico que no sea nulo
     if (this.id != null) {
-      this.titulo='Editar empleado';
+      this.titulo = 'Editar empleado';
       //llamo al servicio, le paso la id, me suscribo xq es un obs y
       //me meto en una function para q me devuelva datos.
       this._empledoService.buscarEmpleado(this.id).subscribe((data) => {
-        console.log(data);
+      //tomo los datos y los muestro en el registro para poder modificarlos 
+        this.crearEmpleado.setValue({
+          nombre: data.payload.data()['nombre'],
+          apellido: data.payload.data()['apellido'],
+          documento: data.payload.data()['documento'],
+          salario: data.payload.data()['salario']
+        })
       });
     }
+  
   }
 }
