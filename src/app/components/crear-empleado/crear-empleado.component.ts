@@ -43,13 +43,22 @@ export class CrearEmpleadoComponent implements OnInit {
   }
 
   //metodos
+  modificacionFormulario(){
 
-  //metodo para controlar que los campos del formulario no esten vacios.
-  agregarEmpleado() {
     this.submitted = true;
     if (this.crearEmpleado.invalid) {
       return;
     }
+    if (this.id == null) {
+      this.agregarEmpleado();
+    }else{
+      this.actualizar(this.id);
+    }
+
+  }
+  //metodo para controlar que los campos del formulario no esten vacios.
+  agregarEmpleado() {
+    
     //objeto empleado
     const empleado: any = {
       nombre: this.crearEmpleado.value.nombre,
@@ -84,18 +93,41 @@ export class CrearEmpleadoComponent implements OnInit {
     //verifico que no sea nulo
     if (this.id != null) {
       this.titulo = 'Editar empleado';
+      this.loading = true; //si tarda, que muestre el metodo
       //llamo al servicio, le paso la id, me suscribo xq es un obs y
       //me meto en una function para q me devuelva datos.
       this._empledoService.buscarEmpleado(this.id).subscribe((data) => {
-      //tomo los datos y los muestro en el registro para poder modificarlos 
+        this.loading = false; //para cancelar el metodo
+        //tomo los datos y los muestro en el registro para poder modificarlos
         this.crearEmpleado.setValue({
-          nombre: data.payload.data()['nombre'],
+          //con payload tomo la informacion y la devuelvo al registro.
+          nombre: data.payload.data()['nombre'], // con el corchete accedo a ese atributo especifico
           apellido: data.payload.data()['apellido'],
           documento: data.payload.data()['documento'],
-          salario: data.payload.data()['salario']
-        })
+          salario: data.payload.data()['salario'],
+        });
       });
     }
-  
+  }
+  actualizar(id: string) {
+      //Creo el objeto empleado el cual se va a modificar y almacenar el atributo actualizado.
+      const empleado: any = {
+        nombre: this.crearEmpleado.value.nombre,
+        apellido: this.crearEmpleado.value.apellido,
+        documento: this.crearEmpleado.value.documento,
+        salario: this.crearEmpleado.value.salario,
+        fechaActualizacion: new Date(),
+      };
+      this.loading=true;
+      //llamo al servicio 
+      this._empledoService.actualizarEmpleado(id, empleado).then(() => {
+        this.loading=false;
+        //notificacion
+        this.ngxToastService.onInfo('Actualizacion exitosa','Usuario actualizado con exito');
+          //funcion que me redirecciona al componente lista-empleados al agregar.
+          this.router.navigate(['/lista-empleados']);
+      })
+      
+
   }
 }
